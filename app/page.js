@@ -46,7 +46,7 @@ export default function AuthPage() {
       email,
       password,
       options: {
-        emailRedirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined,
+        emailRedirectTo: 'https://spend-shadow.preview.emergentagent.com/dashboard',
       }
     });
 
