@@ -89,11 +89,20 @@ export default function AuthPage() {
       });
 
       if (error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          variant: 'destructive',
-        });
+        // Better error message for email not confirmed
+        if (error.message.includes('Email not confirmed')) {
+          toast({
+            title: '📧 Email Not Confirmed',
+            description: 'Please check your email and click the confirmation link, or disable email confirmation in Supabase settings.',
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Login Failed',
+            description: error.message,
+            variant: 'destructive',
+          });
+        }
         setLoading(false);
       } else if (data?.session) {
         toast({
