@@ -45,6 +45,9 @@ export default function AuthPage() {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined,
+      }
     });
 
     if (error) {
@@ -54,14 +57,22 @@ export default function AuthPage() {
         variant: 'destructive',
       });
     } else {
-      toast({
-        title: 'Success!',
-        description: 'Account created successfully. Please log in.',
-      });
-      // Auto switch to login tab
-      setTimeout(() => {
-        document.querySelector('[value="login"]')?.click();
-      }, 500);
+      // Check if email confirmation is required
+      if (data?.user?.identities?.length === 0) {
+        toast({
+          title: 'Check your email',
+          description: 'Please verify your email address to continue.',
+        });
+      } else {
+        toast({
+          title: 'Success!',
+          description: 'Account created! Logging you in...',
+        });
+        // If auto-confirmed, redirect to dashboard
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      }
     }
 
     setLoading(false);
@@ -71,27 +82,36 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
+      if (error) {
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+        setLoading(false);
+      } else if (data?.session) {
+        toast({
+          title: 'Welcome back!',
+          description: 'Logging you in...',
+        });
+        // Use window.location for more reliable redirect
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 500);
+      }
+    } catch (err) {
       toast({
         title: 'Error',
-        description: error.message,
+        description: 'Failed to login. Please try again.',
         variant: 'destructive',
       });
       setLoading(false);
-    } else {
-      toast({
-        title: 'Welcome back!',
-        description: 'Logging you in...',
-      });
-      // Force redirect with window.location as fallback
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 500);
     }
   };
 
