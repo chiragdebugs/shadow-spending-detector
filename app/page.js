@@ -25,6 +25,17 @@ export default function AuthPage() {
         router.push('/dashboard');
       }
     });
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        router.push('/dashboard');
+      }
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, [router]);
 
   const handleSignUp = async (e) => {
@@ -71,15 +82,17 @@ export default function AuthPage() {
         description: error.message,
         variant: 'destructive',
       });
+      setLoading(false);
     } else {
       toast({
         title: 'Welcome back!',
         description: 'Logging you in...',
       });
-      router.push('/dashboard');
+      // Force redirect with window.location as fallback
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 500);
     }
-
-    setLoading(false);
   };
 
   return (
