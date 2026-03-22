@@ -2,7 +2,6 @@
 
 > An intelligent fintech web application that automatically detects hidden recurring subscriptions and unnecessary spending patterns from bank transaction data.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://spend-shadow.preview.emergentagent.com)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)](https://supabase.com/)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -13,13 +12,7 @@
 
 **Try it now:** [https://spend-shadow.preview.emergentagent.com](https://spend-shadow.preview.emergentagent.com)
 
-**Test Account:**
-- Email: `demo@test.com`
-- Password: `Demo123!`
 
-## 📹 Demo Video
-
-[Watch Demo](https://www.loom.com/share/your-video-id) *(Replace with your own demo video)*
 
 ## 🎯 Problem Statement
 
@@ -275,13 +268,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
-
-**Your Name**
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- GitHub: [@YourUsername](https://github.com/yourusername)
-- Portfolio: [yourportfolio.com](https://yourportfolio.com)
-- Email: your.email@example.com
 
 ## 🙏 Acknowledgments
 
